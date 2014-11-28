@@ -3,21 +3,23 @@
 $pass = "61e7680d2ac47e5b9e3c82118fae6e3cfcddff285ac75bb82872bb01f24ac657";
 
 function valCookie(){
-    $cookie = hex2bin(json_decode($_COOKIE['session']));
-    $hash = hash(sha256, $_SERVER['REMOTE_ADDR'] . $cookie['uid'] . $cookie['expiry'] . $pass);
+    $cookie = json_decode(hex2bin($_COOKIE['session']), true);
+    global $pass;
+    $hash = hash('sha256', $_SERVER['REMOTE_ADDR'] . $cookie['uid'] . $cookie['expiry'] . $pass);
+    $uid = $cookie['uid'];
     if ((strcmp($hash, $cookie['hash']) == 0) && ($cookie['expiry'] > time())){
-        return $cookie['uid']; //return user id.
+        return $uid; //return user id.
         }
     }
-
-function hashCookie($uid, $life){
+function hashCookie($uid, $expiry){
+    global $pass;
     $text['uid'] = $uid;
-    $text['expiry'] = time() + $life;
-    $text['hash'] = hash(sha256, $_SERVER['REMOTE_ADDR'] . $text['uid'] . $text['expiry'] . $pass);
-    setcookie("session", bin2hex(json_encode($text)));
+    $text['expiry'] = $expiry;
+    $text['hash'] = hash('sha256', $_SERVER['REMOTE_ADDR'] . $text['uid'] . $text['expiry'] . $pass);
+    $hexCookie = bin2hex(json_encode($text));
+    setcookie("session", $hexCookie, $expiry);
     if(strlen($uid)){
-        return $uid;
+        return true;
     }
 }
-
 ?>
