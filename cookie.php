@@ -15,10 +15,10 @@ function valCookie(){
     }
 function hashCookie($uid, $expiry){
     global $pass;
-    $text['uid'] = $uid;
-    $text['expiry'] = $expiry;
-    $text['hash'] = hash('sha256', $_SERVER['REMOTE_ADDR'] . $text['uid'] . $text['expiry'] . $pass);
-    $hexCookie = bin2hex(json_encode($text));
+    $cookie['uid'] = $uid;
+    $cookie['expiry'] = $expiry;
+    $cookie['hash'] = hash('sha256', $_SERVER['REMOTE_ADDR'] . $cookie['uid'] . $cookie['expiry'] . $pass);
+    $hexCookie = bin2hex(json_encode($cookie));
     setcookie("session", $hexCookie, $expiry);
     if(strlen($uid)){
         return true;
