@@ -13,13 +13,13 @@ function valCookie(){
             }
         }
     }
-function hashCookie($uid, $expiry){
+function hashCookie($uid, $timeout = 3600){
     global $pass;
     $cookie['uid'] = $uid;
-    $cookie['expiry'] = $expiry;
+    $cookie['expiry'] = time()+$timeout;
     $cookie['hash'] = hash('sha256', $_SERVER['REMOTE_ADDR'] . $cookie['uid'] . $cookie['expiry'] . $pass);
     $hexCookie = bin2hex(json_encode($cookie));
-    setcookie("session", $hexCookie, $expiry);
+    setcookie("session", $hexCookie, $cookie['expiry']);
     if(strlen($uid)){
         return true;
     }
