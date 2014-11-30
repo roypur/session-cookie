@@ -8,7 +8,7 @@ function valCookie(){
         global $pass;
         $hash = hash('sha256', $_SERVER['REMOTE_ADDR'] . $cookie['uid'] . $cookie['expiry'] . $pass);
         $uid = $cookie['uid'];
-        if ((strcmp((string)$hash, (string)$cookie['hash']) == 0) && ($cookie['expiry'] > time())){
+        if ((hash_unique($hash, $cookie['hash'])) && ($cookie['expiry'] > time())){
             return $uid; //return user id.
             }
         }
