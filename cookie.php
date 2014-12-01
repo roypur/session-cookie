@@ -6,7 +6,7 @@ function valCookie(){
     if (isset($_COOKIE['session'])){
         $cookie = json_decode(hex2bin($_COOKIE['session']), true);
         global $pass;
-        $hash = hash('sha256', $_SERVER['REMOTE_ADDR'] . $cookie['uid'] . $cookie['expiry'] . $pass);
+        $hash = hash_hmac('sha256', $_SERVER['REMOTE_ADDR'] . $cookie['uid'] . $cookie['expiry'], $pass);
         $uid = $cookie['uid'];
         if ((hash_equals($hash, $cookie['hash'])) && ($cookie['expiry'] > time())){
             return $uid; //return user id.
@@ -17,7 +17,7 @@ function hashCookie($uid, $timeout = 3600){
     global $pass;
     $cookie['uid'] = $uid;
     $cookie['expiry'] = time()+$timeout;
-    $cookie['hash'] = hash('sha256', $_SERVER['REMOTE_ADDR'] . $cookie['uid'] . $cookie['expiry'] . $pass);
+    $cookie['hash'] = hash_hmac('sha256', $_SERVER['REMOTE_ADDR'] . $cookie['uid'] . $cookie['expiry'], $pass);
     $hexCookie = bin2hex(json_encode($cookie));
     setcookie("session", $hexCookie, $cookie['expiry']);
     if(strlen($uid)){
