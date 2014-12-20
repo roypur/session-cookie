@@ -1,6 +1,7 @@
 <?php
 
-$key = hex2bin("8ef7200e7a3207799ecd741433439d5c41e17c30415fbe4121740821032d0f03261023dc346cb4ca2d868324985c6d7e21602c7de7b6fda0ab8d52f0fffd1811");
+
+$key = "adf337c8acb30da926a441522466159243fe12cf8e75731af5c1e18a7dd9a25c";
 
 function valCookie(){
     if (isset($_COOKIE['session']) && isset($_COOKIE['hash'])){
@@ -24,7 +25,7 @@ function hashCookie($uid, $timeout = 3600){
     $hash = hash_hmac('sha256', $hexCookie, $key);
     
     setcookie("session", $hexCookie, $cookie['expiry']);
-    setcookie("hash", $hash);
+    setcookie("hash", $hash, $cookie['expiry']);
     if(strlen($uid)){
         return true;
         }
