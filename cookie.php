@@ -1,7 +1,12 @@
 <?php
 
 
-$key = "adf337c8acb30da926a441522466159243fe12cf8e75731af5c1e18a7dd9a25c";
+$key = hex2bin("1edab484078913761a0443cf2dabfcbfd09331aec49489743c6b46b97e7d6d183446285edd498e66a6e1320b2506c53441670ce43eaeace65f18fa6097f55cf0");
+
+function genKey(){
+    $new = bin2hex(mcrypt_create_iv(64, MCRYPT_DEV_URANDOM));
+    return $new;
+}
 
 function valCookie(){
     if (isset($_COOKIE['session']) && isset($_COOKIE['hash'])){
