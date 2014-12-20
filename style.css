@@ -1,0 +1,28 @@
+body{
+margin:20;
+#padding:100;
+background-color:#aac;
+font-size:20;
+text-align:center;
+}
+td{
+border-style:solid;
+border-width:3;
+border-color:#9af;
+}
+tr{
+border-style:solid;
+border-width:1;
+}
+
+
+#page{
+text-align:left;
+width: 1200;
+height: 100%;
+margin: auto;
+margin-top:20;
+margin:bottom:50;
+padding: 50;
+background-color: #fef;
+}
